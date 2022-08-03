@@ -3,38 +3,41 @@ public class fixed_machine {
 	
 	// mxm bipartite graph
 	public static final int m = 4;
+	public static final int maxNumEdgeSets = 1;
+	public static final int maxNumEdgesPerSet = 20;
 	
 	public static void main(String[] args) {
 		double maxRatio = 0;
 		// number of edge sets
-		for (int n = 1; n <= 3; n++) {
+		for (int n = 1; n <= maxNumEdgeSets; n++) {
 			for (int l = 0; l < 10000; l++) {
-				int[][][] edgeSets = new int[n][m][2];
+				int[][][] edgeSets = new int[n][maxNumEdgesPerSet + 1][2];
 				
 				for (int i = 0; i < n; i++) {
-					int numEdges = 1 + (int) (Math.random() * m);
+					int numEdges = 1 + (int) (Math.random() * maxNumEdgesPerSet);
 					
+					// creating the edge
 					for (int j = 0; j < numEdges; j++) {
 						edgeSets[i][j][0] = 1 + (int) (Math.random() * m);
 						edgeSets[i][j][1] = 1 + (int) (Math.random() * m);
 					}
 				}
 				
-				boolean[][][] usedVertices = new boolean[n * m][m + 1][2];
+				boolean[][][] usedVertices = new boolean[n * maxNumEdgesPerSet + 1][m + 1][2];
 				// graph, edge number, edgeSet # + edge index
-				int[][][] edgesPerGraph = new int[n * m][m][2];
+				int[][][] edgesPerGraph = new int[n * maxNumEdgesPerSet + 1][m][2];
 				int usedGraphs = -1;
-				int[] edgeCountPerGraph = new int[n * m];
+				int[] edgeCountPerGraph = new int[n * maxNumEdgesPerSet + 1];
 				
 				for (int i = 0; i < n; i++) {
-					for (int j = 0; j < m; j++) {
+					for (int j = 0; j < maxNumEdgesPerSet + 1; j++) {
 						if (edgeSets[i][j][0] == 0) {
 							break;
 						}
 						
 						// place the edge
-						for (int graph = 0; graph <= n * m; graph++) {
-							if (graph == n * m) {
+						for (int graph = 0; graph <= n * maxNumEdgesPerSet; graph++) {
+							if (graph == n * maxNumEdgesPerSet) {
 								System.out.println("Something bad happened.");
 								System.exit(0);
 							}
@@ -98,7 +101,7 @@ public class fixed_machine {
 		System.out.println("Edge Sets:");
 		for (int i = 0; i < n; i++) {
 			System.out.print("i = " + (i + 1) + ": [");
-			for (int j = 0; j < m; j++) {
+			for (int j = 0; j < maxNumEdgesPerSet; j++) {
 				if (edgeSets[i][j][0] == 0) {
 					break;
 				}
