@@ -4,11 +4,11 @@ public class switch_scheduling {
 	
 	// mxm bipartite graph
 	public static final int minM = 2;
-	public static final int maxM = 10;
-	public static final int minNumEdgeSets = 30;
-	public static final int maxNumEdgeSets = 50;
-	public static final int maxNumEdgesPerSet = 10;
-	public static final int numIterations = 500;
+	public static final int maxM = 5;
+	public static final int minNumEdgeSets = 2;
+	public static final int maxNumEdgeSets = 2;
+	public static final int maxNumEdgesPerSet = 30;
+	public static final int numIterations = 5;
 
 	public static void main(String[] args) {
 		double maxRatio = -1;
@@ -21,10 +21,43 @@ public class switch_scheduling {
 					// each big arraylist is an edge set
 					// each edge set contains an arraylist of the edges
 					// an edge is an int[] where int[0] = left v, int[1] = right v
+//					m = 5;
+//					n = 2;
 					ArrayList<ArrayList<int[]>> edgeSets = new ArrayList<ArrayList<int[]>>();
+//					
+//					ArrayList<int[]> timeStep2 = new ArrayList<int[]>();
+//					int[] edge2 = {4, 4};
+//					timeStep2.add(edge2);
+//					edgeSets.add(timeStep2);
+//					ArrayList<int[]> timeStep3 = new ArrayList<int[]>();
+//					int[] edge3 = {3, 1};
+//					int[] edge4 = {0,3};
+//					int[] edge5 = {1, 0};
+//					int[] edge6 = {0,3};
+//					int[] edge7 = {3, 1};
+//					int[] edge8 = {2, 1};
+//					int[] edge9 = {1,0};
+//					int[] edge10 = {2, 0};
+//					int[] edge11 = {2,3};
+//					timeStep3.add(edge3);
+//					timeStep3.add(edge4);
+//					timeStep3.add(edge5);
+//					timeStep3.add(edge6);
+//					timeStep3.add(edge7);
+//					timeStep3.add(edge8);
+//					timeStep3.add(edge9);
+//					timeStep3.add(edge10);
+//					timeStep3.add(edge11);
+//					edgeSets.add(timeStep3);
+//					
 					
 					for (int i = 0; i < n; i++) {
 						int numEdges = 1 + (int) (Math.random() * maxNumEdgesPerSet);
+						
+						// EDITED!!!
+						if (i == 0) {
+							numEdges = 1;
+						}
 						
 						ArrayList<int[]> timeStep = new ArrayList<int[]>();
 						
@@ -35,31 +68,6 @@ public class switch_scheduling {
 						}
 						edgeSets.add(timeStep);
 					}
-					
-//					ArrayList<int[]> timeStep0 = new ArrayList<int[]>();
-//					int[] edge0 = {2, 2};
-//					timeStep0.add(edge0);
-//					edgeSets.add(timeStep0);
-//					ArrayList<int[]> timeStep2 = new ArrayList<int[]>();
-//					int[] edge2 = {0, 1};
-//					timeStep2.add(edge2);
-//					edgeSets.add(timeStep2);
-//					ArrayList<int[]> timeStep3 = new ArrayList<int[]>();
-//					int[] edge3 = {2, 0};
-//					int[] edge4 = {2, 1};
-//					int[] edge5 = {0, 2};
-//					int[] edge6 = {1, 0};
-//					int[] edge7 = {0, 2};
-//					int[] edge8 = {2, 0};
-//					int[] edge9 = {0, 0};
-//					timeStep3.add(edge3);
-//					timeStep3.add(edge4);
-//					timeStep3.add(edge5);
-//					timeStep3.add(edge6);
-//					timeStep3.add(edge7);
-//					timeStep3.add(edge8);
-//					timeStep3.add(edge9);
-//					edgeSets.add(timeStep3);
 				
 					// contains the edges in every time step
 					// each element ArrayList<int[]> is a list of edges, where (int[0], int[1]) is the (i,j) = (edge set number, edge number) of edgeSets
@@ -190,15 +198,14 @@ public class switch_scheduling {
 						maxLB = lb;
 						maxCost = newCost;
 					}
-					
-					if (ratio > 1.34) {
-						displayEdgeSets(edgeSets, n);
-						System.out.println("Lower bound: " + maxLB);
-						System.out.println("New cost: " + maxCost);
-						System.out.println("Ratio: " + maxRatio);
-						System.exit(0);
-					}
-					
+//					
+//					if (ratio >= 1.5) {
+//						displayEdgeSets(edgeSets, n);
+//						System.out.println("Lower bound: " + maxLB);
+//						System.out.println("New cost: " + maxCost);
+//						System.out.println("Ratio: " + maxRatio);
+//					}
+//					
 //					System.out.println("Lower bound: " + lb);
 //					System.out.println("New cost: " + newCost);
 //					System.out.println("Ratio: " + ratio);
@@ -206,9 +213,9 @@ public class switch_scheduling {
 			}
 		}
 		
-//		System.out.println("Lower bound: " + maxLB);
-//		System.out.println("New cost: " + maxCost);
-//		System.out.println("Ratio: " + maxRatio);
+		System.out.println("Lower bound: " + maxLB);
+		System.out.println("New cost: " + maxCost);
+		System.out.println("Ratio: " + maxRatio);
 	}
 	
 	public static int getLB(ArrayList<ArrayList<int[]>> edgeSets, int n, int m) {
